@@ -1,3 +1,281 @@
 ﻿@page "/"
+@using WorkPortal.Models;
 
-<h1>Hello, world!</h1>
+<div class="container">
+    <ul class="nav nav-pills mb-3 text-center justify-content-center" id="pills-tab" role="tablist">
+        @foreach (var pageContent in pages)
+        {
+            <li class="nav-item" role="presentation">
+                <button class="nav-link @(pages.First() == pageContent ? " active" : "")" data-bs-toggle="pill" data-bs-target="#@pageContent.Id"
+                        type="button" role="tab" aria-controls="@pageContent.Id" aria-selected="true">
+                    @pageContent.Name
+                </button>
+            </li>
+        }
+    </ul>
+
+    <div class="tab-content" id="pills-tabContent">
+        @foreach (var pageContent in pages)
+        {
+            <div class="tab-pane fade show @(pages.First() == pageContent ? " active" : "")" id="@pageContent.Id" role="tabpanel">
+                <div class="container">
+                    <div class="row">
+
+                        @foreach (var column in pageContent.Columns)
+                        {
+                            <div class="@($"col{column.Width}")">
+
+                                @foreach (var contentItem in column.Items)
+                                {
+                                    <div class="container@(column.Items.First() != contentItem ? " mt-3" : "")">
+                                        @if (contentItem is LinkGroup linkGroup)
+                                        {
+                                            <h2>@linkGroup.Name</h2>
+                                            <div class="list-group">
+                                                @foreach (var link in linkGroup.Links)
+                                                {
+                                                    <a class="list-group-item list-group-item-action" target="_blank" href="@link.Url">
+                                                        @link.Name
+                                                    </a>
+                                                }
+                                            </div>
+                                        }
+                                        else if (contentItem is RepoGroup repoGroup)
+                                        {
+                                            <div class="col">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col">
+                                                            <h2>@repoGroup.Name</h2>
+                                                        </div>
+                                                    </div>
+                                                    <table class="table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Name</th>
+                                                                <th>Repos</th>
+                                                                <th>Pipelines</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var repo in repoGroup.Repos)
+                                                            {
+                                                                <tr>
+                                                                    <th scope="row">
+                                                                        @repo.Name
+                                                                    </th>
+                                                                    <td>
+                                                                        <div class="list-group">
+                                                                            @foreach (var link in repo.RepoLinks)
+                                                                            {
+                                                                                <a class="list-group-item list-group-item-action"
+                                                                                   target="_blank"
+                                                                                   href="@link.Url">
+                                                                                    @link.Name
+                                                                                </a>
+                                                                            }
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="list-group">
+                                                                            @foreach (var link in repo.PipelineLinks)
+                                                                            {
+                                                                                <a class="list-group-item list-group-item-action"
+                                                                                   target="_blank"
+                                                                                   href="@link.Url">
+                                                                                    @link.Name
+                                                                                </a>
+                                                                            }
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+
+    private IEnumerable<Page>? pages;
+
+    protected override void OnInitialized()
+    {
+        pages = new Page[]
+        {
+            new Page("Docker", new PageColumn[]
+            {
+                new PageColumn("-2", new ContentItem[]
+                {
+                    new LinkGroup("Projects", new Link[]
+                    {
+                        new Link(".NET", "https://github.com/orgs/dotnet/projects/58/views/1"),
+                        new Link(".NET Fx", "https://github.com/orgs/microsoft/projects/185/views/1")
+                    }),
+                    new LinkGroup("Infra", new Link[]
+                    {
+                        new Link("Image info", "https://github.com/dotnet/versions/tree/main/build-info/docker"),
+                        new Link("Azure Dashboard", "https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/dashboard/arm/subscriptions/941d4baa-5ef2-462e-b4b1-505791294610/resourcegroups/dashboards/providers/microsoft.portal/dashboards/984a6077-522e-426d-ad75-1430a09521bc")
+                    }),
+                }),
+                new PageColumn("", new ContentItem[]
+                {
+                    new RepoGroup(new Repo[]
+                    {
+                        new Repo("dotnet/dotnet-docker",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/dotnet-docker"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-docker")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdotnet-docker"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdotnet-docker")
+                            }),
+                        new Repo("dotnet/docker-tools",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/docker-tools"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-docker-tools")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdocker-tools"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdocker-tools")
+                            }),
+                        new Repo("dotnet/dotnet-buildtools-prereqs-docker",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/dotnet-buildtools-prereqs-docker"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-buildtools-prereqs-docker")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdotnet-buildtools-prereqs-docker"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdotnet-buildtools-prereqs-docker")
+                            }),
+                        new Repo("microsoft/dotnet-framework-docker",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/microsoft/dotnet-framework-docker"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/microsoft-dotnet-framework-docker")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5CMicrosoft%5Cdotnet-framework-docker"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5CMicrosoft%5Cdotnet-framework-docker")
+                            }),
+                        new Repo("dotnet/dotnet-docker-internal",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Internal", "https://github.com/dotnet/dotnet-docker-internal")
+                            },
+                            PipelineLinks: Enumerable.Empty<Link>())
+                    })
+                }),
+                new PageColumn("-3", new ContentItem[]
+                {
+                    new LinkGroup("Docker Hub", new Link[]
+                    {
+                        new Link("dotnet repo", "https://hub.docker.com/_/microsoft-dotnet"),
+                        new Link("dotnet/framework repo", "https://hub.docker.com/_/microsoft-dotnet-framework")
+                    }),
+                    new LinkGroup("MAR", new Link[]
+                    {
+                        new Link("MAR Portal", "https://mcr.microsoft.com"),
+                        new Link("MAR Status", "https://status-portal.mscr.io"),
+                        new Link("mcr repo", "https://github.com/microsoft/mcr"),
+                        new Link("mcrdocs repo", "https://github.com/microsoft/mcrdocs")
+                    })
+                }),
+            }),
+            new Page("Source-Build", new PageColumn[]
+            {
+                new PageColumn("-2", new ContentItem[]
+                {
+                    new LinkGroup("Projects", new Link[]
+                    {
+                        new Link("Source-Build", "https://github.com/orgs/dotnet/projects/101")
+                    }),
+                    new LinkGroup("My Issues", new Link[]
+                    {
+                        new Link("Assigned", "https://github.com/issues?q=is%3Aopen+is%3Aissue+assignee%3Amthalman+archived%3Afalse+repo%3Adotnet%2Fsource-build+repo%3Adotnet%2Finstaller+repo%3Adotnet%2Fdotnet+repo%3Adotnet%2Fsource-build-reference-packages+repo%3Adotnet%2Fsource-build-externals")
+                    })
+                }),
+                new PageColumn("", new ContentItem[]
+                {
+                    new RepoGroup(new Repo[]
+                    {
+                        new Repo("dotnet/source-build",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/source-build"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Csource-build"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build")
+                            }),
+                        new Repo("dotnet/installer",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/installer"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-installer")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cinstaller"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cinstaller")
+                            }),
+                        new Repo("dotnet/dotnet",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/dotnet"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdotnet"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build-externals")
+                            }),
+                        new Repo("dotnet/source-build-reference-packages",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/source-build-reference-packages"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build-reference-packages")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Csource-build"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build")
+                            }),
+                        new Repo("dotnet/source-build-externals",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/source-build-externals"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build-externals")
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Csource-build"),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build")
+                            })
+                    })
+                })
+            })
+        };
+    }
+}
