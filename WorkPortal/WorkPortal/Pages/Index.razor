@@ -34,9 +34,7 @@
                                             <div class="list-group">
                                                 @foreach (var link in linkGroup.Links)
                                                 {
-                                                    <a class="list-group-item list-group-item-action" target="_blank" href="@link.Url">
-                                                        @link.Name
-                                                    </a>
+                                                    <WorkPortal.Components.Link LinkModel="@link" />
                                                 }
                                             </div>
                                         }
@@ -68,11 +66,7 @@
                                                                         <div class="list-group">
                                                                             @foreach (var link in repo.RepoLinks)
                                                                             {
-                                                                                <a class="list-group-item list-group-item-action"
-                                                                                   target="_blank"
-                                                                                   href="@link.Url">
-                                                                                    @link.Name
-                                                                                </a>
+                                                                                <WorkPortal.Components.Link LinkModel="@link" />
                                                                             }
                                                                         </div>
                                                                     </td>
@@ -80,11 +74,7 @@
                                                                         <div class="list-group">
                                                                             @foreach (var link in repo.PipelineLinks)
                                                                             {
-                                                                                <a class="list-group-item list-group-item-action"
-                                                                                   target="_blank"
-                                                                                   href="@link.Url">
-                                                                                    @link.Name
-                                                                                </a>
+                                                                                <WorkPortal.Components.Link LinkModel="@link" />
                                                                             }
                                                                         </div>
                                                                     </td>
@@ -120,13 +110,17 @@
                 {
                     new LinkGroup("Projects", new Link[]
                     {
-                        new Link(".NET", "https://github.com/orgs/dotnet/projects/58/views/1"),
-                        new Link(".NET Fx", "https://github.com/orgs/microsoft/projects/185/views/1")
+                        new Link(".NET", "https://github.com/orgs/dotnet/projects/58/views/1", Svgs.GitHub),
+                        new Link(".NET Fx", "https://github.com/orgs/microsoft/projects/185/views/1", Svgs.GitHub)
                     }),
                     new LinkGroup("Infra", new Link[]
                     {
-                        new Link("Image info", "https://github.com/dotnet/versions/tree/main/build-info/docker"),
-                        new Link("Azure Dashboard", "https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/dashboard/arm/subscriptions/941d4baa-5ef2-462e-b4b1-505791294610/resourcegroups/dashboards/providers/microsoft.portal/dashboards/984a6077-522e-426d-ad75-1430a09521bc")
+                        new Link("Image info",
+                            "https://github.com/dotnet/versions/tree/main/build-info/docker",
+                            Svgs.Files),
+                        new Link("AZ Dashboard",
+                            "https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/dashboard/arm/subscriptions/941d4baa-5ef2-462e-b4b1-505791294610/resourcegroups/dashboards/providers/microsoft.portal/dashboards/984a6077-522e-426d-ad75-1430a09521bc",
+                            Svgs.Azure)
                     }),
                 }),
                 new PageColumn("", new ContentItem[]
@@ -136,51 +130,51 @@
                         new Repo("dotnet/dotnet-docker",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/dotnet/dotnet-docker"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-docker")
+                                new Link("Public", "https://github.com/dotnet/dotnet-docker", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-docker", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdotnet-docker"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdotnet-docker")
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdotnet-docker", Svgs.AzureDevOps),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdotnet-docker", Svgs.AzureDevOps)
                             }),
                         new Repo("dotnet/docker-tools",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/dotnet/docker-tools"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-docker-tools")
+                                new Link("Public", "https://github.com/dotnet/docker-tools", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-docker-tools", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdocker-tools"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdocker-tools")
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdocker-tools", Svgs.AzureDevOps),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdocker-tools", Svgs.AzureDevOps)
                             }),
                         new Repo("dotnet/dotnet-buildtools-prereqs-docker",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/dotnet/dotnet-buildtools-prereqs-docker"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-buildtools-prereqs-docker")
+                                new Link("Public", "https://github.com/dotnet/dotnet-buildtools-prereqs-docker", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet-buildtools-prereqs-docker", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdotnet-buildtools-prereqs-docker"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdotnet-buildtools-prereqs-docker")
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdotnet-buildtools-prereqs-docker", Svgs.AzureDevOps),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdotnet-buildtools-prereqs-docker", Svgs.AzureDevOps)
                             }),
                         new Repo("microsoft/dotnet-framework-docker",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/microsoft/dotnet-framework-docker"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/microsoft-dotnet-framework-docker")
+                                new Link("Public", "https://github.com/microsoft/dotnet-framework-docker", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/microsoft-dotnet-framework-docker", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5CMicrosoft%5Cdotnet-framework-docker"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5CMicrosoft%5Cdotnet-framework-docker")
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5CMicrosoft%5Cdotnet-framework-docker", Svgs.AzureDevOps),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5CMicrosoft%5Cdotnet-framework-docker", Svgs.AzureDevOps)
                             }),
                         new Repo("dotnet/dotnet-docker-internal",
                             RepoLinks: new Link[]
                             {
-                                new Link("Internal", "https://github.com/dotnet/dotnet-docker-internal")
+                                new Link("Internal", "https://github.com/dotnet/dotnet-docker-internal/issues", Svgs.GitHub)
                             },
                             PipelineLinks: Enumerable.Empty<Link>())
                     })
@@ -189,15 +183,15 @@
                 {
                     new LinkGroup("Docker Hub", new Link[]
                     {
-                        new Link("dotnet repo", "https://hub.docker.com/_/microsoft-dotnet"),
-                        new Link("dotnet/framework repo", "https://hub.docker.com/_/microsoft-dotnet-framework")
+                        new Link("dotnet repo", "https://hub.docker.com/_/microsoft-dotnet", Svgs.Docker),
+                        new Link("dotnet/framework repo", "https://hub.docker.com/_/microsoft-dotnet-framework", Svgs.Docker)
                     }),
                     new LinkGroup("MAR", new Link[]
                     {
-                        new Link("MAR Portal", "https://mcr.microsoft.com"),
-                        new Link("MAR Status", "https://status-portal.mscr.io"),
-                        new Link("mcr repo", "https://github.com/microsoft/mcr"),
-                        new Link("mcrdocs repo", "https://github.com/microsoft/mcrdocs")
+                        new Link("MAR Portal", "https://mcr.microsoft.com", Svgs.Microsoft),
+                        new Link("MAR Status", "https://status-portal.mscr.io", Svgs.Microsoft),
+                        new Link("mcr repo", "https://github.com/microsoft/mcr", Svgs.GitHub),
+                        new Link("mcrdocs repo", "https://github.com/microsoft/mcrdocs", Svgs.GitHub)
                     })
                 }),
             }),
@@ -207,11 +201,13 @@
                 {
                     new LinkGroup("Projects", new Link[]
                     {
-                        new Link("Source-Build", "https://github.com/orgs/dotnet/projects/101")
+                        new Link("Source-Build", "https://github.com/orgs/dotnet/projects/101", Svgs.GitHub)
                     }),
                     new LinkGroup("My Issues", new Link[]
                     {
-                        new Link("Assigned", "https://github.com/issues?q=is%3Aopen+is%3Aissue+assignee%3Amthalman+archived%3Afalse+repo%3Adotnet%2Fsource-build+repo%3Adotnet%2Finstaller+repo%3Adotnet%2Fdotnet+repo%3Adotnet%2Fsource-build-reference-packages+repo%3Adotnet%2Fsource-build-externals")
+                        new Link("Assigned",
+                            "https://github.com/issues?q=is%3Aopen+is%3Aissue+assignee%3Amthalman+archived%3Afalse+repo%3Adotnet%2Fsource-build+repo%3Adotnet%2Finstaller+repo%3Adotnet%2Fdotnet+repo%3Adotnet%2Fsource-build-reference-packages+repo%3Adotnet%2Fsource-build-externals",
+                            Svgs.GitHub)
                     })
                 }),
                 new PageColumn("", new ContentItem[]
@@ -221,57 +217,56 @@
                         new Repo("dotnet/source-build",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/dotnet/source-build"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build")
+                                new Link("Public", "https://github.com/dotnet/source-build", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Csource-build"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build")
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionId=26", Svgs.AzureDevOps),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build", Svgs.AzureDevOps)
                             }),
                         new Repo("dotnet/installer",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/dotnet/installer"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-installer")
+                                new Link("Public", "https://github.com/dotnet/installer", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-installer", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cinstaller"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cinstaller")
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionId=20", Svgs.AzureDevOps),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cinstaller", Svgs.AzureDevOps)
                             }),
                         new Repo("dotnet/dotnet",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/dotnet/dotnet"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet")
+                                new Link("Public", "https://github.com/dotnet/dotnet", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionId=1219&view=runs", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Cdotnet"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build-externals")
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build-externals", Svgs.AzureDevOps)
                             }),
                         new Repo("dotnet/source-build-reference-packages",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/dotnet/source-build-reference-packages"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build-reference-packages")
+                                new Link("Public", "https://github.com/dotnet/source-build-reference-packages", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build-reference-packages", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Csource-build"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build")
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionId=106", Svgs.AzureDevOps),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionId=401", Svgs.AzureDevOps)
                             }),
                         new Repo("dotnet/source-build-externals",
                             RepoLinks: new Link[]
                             {
-                                new Link("Public", "https://github.com/dotnet/source-build-externals"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build-externals")
+                                new Link("Public", "https://github.com/dotnet/source-build-externals", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-source-build-externals", Svgs.AzureDevOps)
                             },
                             PipelineLinks: new Link[]
                             {
-                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionScope=%5Cdotnet%5Csource-build"),
-                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build")
+                                new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionId=80", Svgs.AzureDevOps),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build", Svgs.AzureDevOps)
                             })
                     })
                 })

@@ -1,0 +1,13 @@
+﻿<a class="list-group-item list-group-item-action" target="_blank" href="@LinkModel.Url">
+        @if (LinkModel.IconSvg is not null)
+        {
+            <span>@((MarkupString)LinkModel.IconSvg)</span>
+        }
+        <span class="ml-1"></span>
+        @LinkModel.Name
+</a>
+
+@code {
+    [Parameter, EditorRequired]
+    public Models.Link LinkModel { get; set; } = null!;
+}
