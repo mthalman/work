@@ -270,6 +270,16 @@
                             {
                                 new Link("Public", "https://dev.azure.com/dnceng-public/public/_build?definitionId=80", Svgs.AzureDevOps),
                                 new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Csource-build", Svgs.AzureDevOps)
+                            }),
+                        new Repo("dotnet/release",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Public", "https://github.com/dotnet/release", Svgs.GitHub),
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-release", Svgs.AzureDevOps)
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionId=1229", Svgs.AzureDevOps)
                             })
                     })
                 })
