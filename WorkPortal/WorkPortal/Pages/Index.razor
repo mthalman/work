@@ -219,6 +219,24 @@
                         new Link("Assigned (Board)",
                             "https://github.com/orgs/dotnet/projects/101/views/1?filterQuery=assignee%3Amthalman",
                             Svgs.GitHub)
+                    }),
+                    new LinkGroup("Partners", new Link[]
+                    {
+                        new Link("DSP",
+                            "https://dev.azure.com/dotnet-security-partners/dotnet",
+                            Svgs.AzureDevOps),
+                        new Link("Feed",
+                            "https://dev.azure.com/dotnet-security-partners/dotnet/_artifacts/feed/dotnet",
+                            Svgs.AzureDevOps),
+                        new Link("Wiki",
+                            "https://dev.azure.com/dotnet-security-partners/dotnet/_wiki/wikis/dotnet.wiki/4/Release-Info",
+                            Svgs.AzureDevOps)
+                    }),
+                    new LinkGroup("Release", new Link[]
+                    {
+                        new Link("Validation Feed",
+                            "https://dev.azure.com/dnceng/internal/_artifacts/feed/dotnet-sb-validation",
+                            Svgs.AzureDevOps)
                     })
                 }),
                 new PageColumn("", new ContentItem[]
@@ -289,6 +307,21 @@
                             PipelineLinks: new Link[]
                             {
                                 new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionId=1229", Svgs.AzureDevOps)
+                            }),
+                        new Repo("security-partners-dotnet",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/security-partners-dotnet", Svgs.AzureDevOps)
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionId=1201", Svgs.AzureDevOps)
+                            }),
+                        new Repo("Release test forks",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("source-build", "https://github.com/maestro-auth-test/source-build", Svgs.GitHub),
+                                new Link("installer", "https://github.com/maestro-auth-test/installer", Svgs.GitHub)
                             })
                     })
                 })
