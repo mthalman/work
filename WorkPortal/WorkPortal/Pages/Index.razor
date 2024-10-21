@@ -183,7 +183,16 @@
                             {
                                 new Link("Internal", "https://github.com/dotnet/dotnet-docker-internal/issues", Svgs.GitHub)
                             },
-                            PipelineLinks: Enumerable.Empty<Link>())
+                            PipelineLinks: Enumerable.Empty<Link>()),
+                        new Repo("dotnet/docker-tools-internal",
+                            RepoLinks: new Link[]
+                            {
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_git/dotnet-docker-tools-internal", Svgs.AzureDevOps)
+                            },
+                            PipelineLinks: new Link[]
+                            {
+                                new Link("Internal", "https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Cdocker-tools-internal", Svgs.AzureDevOps)
+                            })
                     })
                 }),
                 new PageColumn("-3", new ContentItem[]
